@@ -1,7 +1,10 @@
-    import com.google.gson.Gson;
+package utilities;
 
-    import java.io.IOException;
-    import java.net.URI;
+import com.google.gson.Gson;
+    import utilities.Endereco;
+
+import javax.swing.*;
+import java.net.URI;
     import java.net.http.HttpClient;
     import java.net.http.HttpRequest;
     import java.net.http.HttpResponse;
@@ -15,6 +18,10 @@
             HttpRequest request = HttpRequest.newBuilder()
                     .uri(endereco)
                     .build();
+
+            if (!cep.matches("\\d{8}")) {
+                JOptionPane.showMessageDialog(null,"Formato de CEP inválido. Digite um CEP válido com 8 dígitos.");
+            }
 
             try {
                 HttpResponse<String> response = HttpClient

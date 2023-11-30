@@ -1,22 +1,27 @@
+import utilities.ConsultaCep;
+import utilities.Endereco;
+import utilities.GeradorDeArquivo;
+import view.Interface;
+
 import java.io.IOException;
-import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
+
+        Interface userInterface = new Interface();
         ConsultaCep consultaCep = new ConsultaCep();
 
-        System.out.println("Digite um CEP para consulta: ");
-        var cep = sc.nextLine();
-
         try {
+            String cep = userInterface.obterCep();
             Endereco novoEndereco = consultaCep.buscaEndereco(cep);
-            System.out.println(novoEndereco);
+
+            userInterface.mostrarMensagem("Endereço encontrado:\n" + novoEndereco);
+
             GeradorDeArquivo gerador = new GeradorDeArquivo();
             gerador.geraJson(novoEndereco);
         } catch (RuntimeException | IOException e) {
-            System.out.println(e.getMessage());
-            System.out.println("Aplicação finalizada.");
+            System.out.println("Erro: " + e.getMessage());
+            System.out.println("A aplicação falhou e foi finalizada.");
         }
     }
 }
